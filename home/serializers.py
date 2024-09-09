@@ -1,8 +1,7 @@
-from .models import OvozModel
 from rest_framework import serializers
+from .models import OvozModel
 
-
-class OvozSerializer (serializers.ModelSerializer):
+class OvozSerializer(serializers.ModelSerializer):
     class Meta:
-        model=OvozModel
-        fields =['id', 'saylovchi', 'user'] 
+        model = OvozModel
+        fields = ['id', 'user']

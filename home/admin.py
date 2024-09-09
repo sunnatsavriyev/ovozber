@@ -4,10 +4,9 @@ from .models import OvozModel
 
 @admin.register(OvozModel)
 class ToDoAdmin(admin.ModelAdmin):
-    list_display = (
-        'saylovchi',
+    list_display = [
         'user'
-    )
+    ]
 
     list_filter = ['user'] 
 

@@ -1,10 +1,10 @@
+from rest_framework import permissions
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.response import Response
+from rest_framework.exceptions import PermissionDenied ,ValidationError
+from django.db.models import Count
 from .models import OvozModel
 from .serializers import OvozSerializer
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework import permissions
-from rest_framework.response import Response
-from rest_framework.exceptions import PermissionDenied
-from django.db.models import Count
 
 class OvozApiView(ListCreateAPIView):
     permission_classes = (permissions.AllowAny,)
@@ -13,7 +13,12 @@ class OvozApiView(ListCreateAPIView):
 
     def perform_create(self, serializer):
         if self.request.user.is_authenticated:
-            serializer.save(user=self.request.user)
+            vote_user = serializer.validated_data['user']
+            if vote_user == self.request.user:
+                raise ValidationError("Siz o'zingizga ovoz beraolmaysiz.")
+            
+            # Save the vote for the selected user
+            serializer.save(user=vote_user)
         else:
             raise PermissionDenied("Ovoz berish uchun tizimga kiring.")
 
@@ -39,7 +44,7 @@ class OvozApiView(ListCreateAPIView):
             }
         
         return response
-    
+
 
 
 class OvozDetail(RetrieveUpdateDestroyAPIView):
