@@ -1,0 +1,27 @@
+
+volumes:
+  postgres_data:
+    
+services:
+  web:
+    container_name: ovozber_web
+    build: 
+      context: ../../ovozber_project
+      dockerfile: docker/DockerFile
+    depends_on:
+      - db
+    volumes:
+      - ../../ovozber_project:/web
+    ports:
+      - 8000:8000
+    command: /start.sh
+    entrypoint: /entrypoint.sh
+    restart: on-failure
+    env_file: ../.env
+
+  db:
+    container_name: ovozber_db
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file: ../.env.db
