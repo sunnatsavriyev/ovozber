@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount'
+    'allauth.socialaccount',
+    'drf_spectacular',
 ]
 
 
@@ -56,8 +57,17 @@ REST_FRAMEWORK={
     'DEFAULT_AUTHENTICATION_CLASSES':[
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Ovozber Api',
+    'DESCRIPTION': 'Bu yerda boshqa userlarga ovoz berish mumkin',
+    'VERSION': '1.0.0',
+}
+
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 

@@ -6,6 +6,9 @@ from django.db.models import Count
 from .models import OvozModel
 from .serializers import OvozSerializer
 
+
+
+
 class OvozApiView(ListCreateAPIView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = OvozSerializer
